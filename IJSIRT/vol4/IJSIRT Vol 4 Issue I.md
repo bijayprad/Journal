@@ -4,7 +4,7 @@ Paper I : Prevalence of Cervical Ribs and Elongated Transverse Process Using Rad
 
 Ramswarth Sah, Suman Phuyal, Pradeep Kumar Mishra, Bijay Lal Pradhan, Swastika Pandit, Rajesh Karki
 
-[View PDF](https://docs.google.com/gview?embedded=1&url=https://raw.githubusercontent.com/bijayprad/Journal/main/IJSIRT/vol%204/pdf/paper1.pdf)
+[View PDF](https://docs.google.com/gview?embedded=1&url=https://raw.githubusercontent.com/bijayprad/Journal/main/IJSIRT/vol4/pdf/paper1.pdf)
 
 Paper II : Pre-logged Biomass and Carbon Stock Density in Shorea robusta Gaertn. f. Forests in the Himalayan Foothills of Western Nepal
 

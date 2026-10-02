@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A professional journal discovery and submission portal featuring selected academic journals and their official websites.">
+<title>Journal Publishing Hub | Explore Journals & Submit Your Research</title>
+<style>
+  :root{
+    --navy:#082b59;
+    --blue:#1266d6;
+    --cyan:#10bde7;
+    --gold:#f5b82e;
+    --ink:#172033;
+    --muted:#667085;
+    --paper:#f7f9fc;
+    --white:#fff;
+    --line:#e5eaf2;
+    --shadow:0 18px 50px rgba(10,35,70,.10);
+    --radius:22px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    color:var(--ink);
+    background:linear-gradient(180deg,#f8fbff 0,#fff 40%,#f7f9fc 100%);
+    line-height:1.6;
+  }
+  a{color:inherit}
+  .topbar{
+    background:var(--navy);
+    color:#fff;
+    font-size:.88rem;
+    padding:9px 20px;
+    text-align:center;
+  }
+  header{
+    position:relative;
+    overflow:hidden;
+    color:#fff;
+    background:
+      radial-gradient(circle at 85% 20%,rgba(16,189,231,.30),transparent 30%),
+      radial-gradient(circle at 10% 10%,rgba(245,184,46,.18),transparent 28%),
+      linear-gradient(135deg,#062451,#0d55a7 60%,#087ca9);
+  }
+  header:after{
+    content:"";
+    position:absolute;left:-5%;right:-5%;bottom:-95px;height:170px;
+    background:#fff;border-radius:50% 50% 0 0/70% 70% 0 0;
+    transform:rotate(-2deg);
+    opacity:.96;
+  }
+  .nav{
+    max-width:1180px;margin:auto;padding:22px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+    position:relative;z-index:2;
+  }
+  .brand{font-weight:800;letter-spacing:.02em;font-size:1.05rem}
+  .navlinks{display:flex;gap:22px;flex-wrap:wrap}
+  .navlinks a{text-decoration:none;color:#eaf4ff;font-weight:650}
+  .hero{
+    max-width:1180px;margin:auto;padding:70px 24px 150px;position:relative;z-index:1;
+    display:grid;grid-template-columns:1.3fr .7fr;gap:45px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;gap:8px;align-items:center;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+    padding:7px 12px;border-radius:999px;font-size:.86rem;font-weight:700;
+  }
+  h1{font-size:clamp(2.5rem,6vw,5.3rem);line-height:1.02;margin:18px 0}
+  .hero p{font-size:1.12rem;color:#e3efff;max-width:700px}
+  .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:0;border-radius:13px;padding:12px 17px;font-weight:800;
+    text-decoration:none;cursor:pointer;transition:.2s transform,.2s box-shadow;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,.13)}
+  .btn.primary{background:var(--gold);color:#182033}
+  .btn.light{background:#fff;color:var(--navy)}
+  .btn.outline{background:transparent;border:1px solid var(--line);color:var(--navy)}
+  .hero-panel{
+    background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20);
+    backdrop-filter:blur(10px);border-radius:28px;padding:25px;
+    box-shadow:0 20px 55px rgba(0,0,0,.16);
+  }
+  .hero-panel .big{font-size:3.6rem;font-weight:900;line-height:1}
+  .hero-panel small{color:#d9ecff}
+  .section{max-width:1180px;margin:auto;padding:78px 24px}
+  .section-head{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:28px}
+  .section h2{font-size:2.1rem;margin:0 0 8px;color:var(--navy)}
+  .section-head p{margin:0;color:var(--muted);max-width:680px}
+  .searchbar{
+    display:flex;gap:10px;align-items:center;margin:18px 0 30px;
+    background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 13px;
+    box-shadow:0 8px 28px rgba(10,35,70,.05)
+  }
+  .searchbar input{
+    border:0;outline:0;width:100%;font-size:1rem;background:transparent;color:var(--ink)
+  }
+  .grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px
+  }
+  .card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;
+    transition:.22s transform,.22s box-shadow;
+  }
+  .card:hover{transform:translateY(-5px);box-shadow:0 25px 60px rgba(10,35,70,.14)}
+  .cover{
+    height:210px;position:relative;display:flex;align-items:flex-end;padding:18px;
+    overflow:hidden;color:#fff;
+    background:linear-gradient(135deg,#072b5c,#1174d1);
+  }
+  .cover:before,.cover:after{
+    content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.22)
+  }
+  .cover:before{width:210px;height:210px;right:-65px;top:-75px}
+  .cover:after{width:300px;height:300px;left:-130px;bottom:-230px}
+  .cover.gold{background:linear-gradient(135deg,#07346d,#0d79c9 62%,#f2b52d)}
+  .cover.teal{background:linear-gradient(135deg,#073f63,#00a7b8 62%,#f2c14e)}
+  .cover.purple{background:linear-gradient(135deg,#25205f,#5a46bd 62%,#18a8cc)}
+  .cover.green{background:linear-gradient(135deg,#064d45,#159b78 62%,#e6b83a)}
+  .cover.red{background:linear-gradient(135deg,#54213c,#b34068 62%,#f0ae35)}
+  .cover.blue{background:linear-gradient(135deg,#061f52,#1769d5 62%,#14b9d7)}
+  .cover .initials{position:relative;z-index:2;font-size:2.7rem;font-weight:950;letter-spacing:-.06em}
+  .cover .mini{position:absolute;z-index:2;top:18px;left:18px;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;opacity:.88}
+  .card-body{padding:20px;display:flex;flex-direction:column;flex:1}
+  .tag{
+    display:inline-flex;align-self:flex-start;background:#eef6ff;color:#0b61b7;
+    padding:5px 9px;border-radius:999px;font-size:.72rem;font-weight:800;margin-bottom:10px
+  }
+  .card h3{margin:0 0 9px;font-size:1.08rem;line-height:1.3;color:#102b50}
+  .card p{color:var(--muted);font-size:.91rem;margin:0 0 15px}
+  .meta{font-size:.78rem;color:#667085;margin-top:auto;padding-top:8px}
+  .card-actions{display:flex;gap:8px;margin-top:15px}
+  .card-actions a,.card-actions button{flex:1}
+  .btn.small{padding:9px 10px;font-size:.82rem}
+  .info{
+    background:linear-gradient(135deg,#f0f7ff,#fff7e4);
+    border:1px solid #dbe7f7;border-radius:28px;padding:32px;
+    display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;
+  }
+  .info h2{margin-top:0}
+  .steps{display:grid;gap:12px}
+  .step{background:#fff;border:1px solid var(--line);padding:16px;border-radius:15px;display:flex;gap:13px}
+  .num{min-width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--navy);color:#fff;font-weight:900}
+  .contact{
+    background:linear-gradient(135deg,#061f45,#0a5caa);
+    color:#fff;border-radius:30px;padding:42px;
+    display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;
+    box-shadow:var(--shadow)
+  }
+  .contact h2{color:#fff;margin:0 0 8px}
+  .contact p{color:#dbeaff;margin:0;max-width:700px}
+  footer{background:#061a35;color:#cbd9ec;padding:28px 24px}
+  .footer-inner{max-width:1180px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:.88rem}
+  .modal{
+    position:fixed;inset:0;background:rgba(2,18,38,.68);display:none;align-items:center;justify-content:center;
+    padding:20px;z-index:20
+  }
+  .modal.show{display:flex}
+  .modalbox{
+    background:#fff;max-width:760px;width:100%;max-height:90vh;overflow:auto;border-radius:25px;
+    padding:30px;box-shadow:0 30px 90px rgba(0,0,0,.28);position:relative
+  }
+  .close{position:absolute;right:16px;top:13px;border:0;background:#eef2f7;border-radius:50%;width:38px;height:38px;font-size:20px;cursor:pointer}
+  .modal h2{color:var(--navy);margin:0 45px 8px 0}
+  .modal .facts{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+  .fact{background:#f4f7fb;border:1px solid var(--line);padding:7px 10px;border-radius:10px;font-size:.82rem}
+  .notice{font-size:.84rem;color:#667085;background:#f7f9fc;padding:13px;border-radius:12px;margin-top:18px}
+  .cover.has-photo{padding:0;align-items:stretch}
+  .cover.has-photo img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;z-index:0}
+  .cover.has-photo:before,.cover.has-photo:after{z-index:1}
+  .cover.has-photo .mini,.cover.has-photo .initials{z-index:2;text-shadow:0 2px 8px rgba(0,0,0,.65)}
+  .hidden{display:none!important}
+  .grid{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:1050px){.grid{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}.hero-panel{max-width:520px}}
+  @media(max-width:700px){
+    .navlinks{display:none}.hero{padding-top:45px}.grid{grid-template-columns:1fr}
+    .section{padding:55px 18px}.section-head{display:block}
+    .info,.contact{grid-template-columns:1fr;padding:25px}
+    .contact .btn{width:100%}
+  }
+
+
+  /* Integrated journal cover collection */
+  #covers{scroll-margin-top:25px}
+  .cover-section{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:28px;
+    padding:30px;
+    box-shadow:var(--shadow);
+  }
+  .cover-gallery{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+  }
+  .cover-item{
+    background:#f8fafc;
+    border:1px solid var(--line);
+    border-radius:18px;
+    overflow:hidden;
+    transition:.22s transform,.22s box-shadow;
+  }
+  .cover-item:hover{
+    transform:translateY(-4px);
+    box-shadow:0 14px 35px rgba(10,35,70,.12);
+  }
+  .cover-item a{display:block;text-decoration:none}
+  .cover-item img{
+    width:100%;
+    height:260px;
+    object-fit:contain;
+    display:block;
+    background:#fff;
+    padding:12px;
+  }
+  .cover-caption{
+    padding:12px 14px;
+    text-align:center;
+    font-weight:800;
+    color:var(--navy);
+    border-top:1px solid var(--line);
+  }
+  .cover-caption small{
+    display:block;
+    margin-top:3px;
+    color:var(--muted);
+    font-weight:500;
+  }
+  .cover-note{
+    margin:0 0 22px;
+    color:var(--muted);
+  }
+  .cover.has-photo{
+    text-decoration:none;
+    color:#fff;
+    cursor:pointer;
+  }
+  .cover.has-photo img{
+    transition:transform .3s ease;
+  }
+  .cover.has-photo:hover img{transform:scale(1.035)}
+  @media(max-width:1050px){.cover-gallery{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:700px){.cover-gallery{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<div class="topbar">Academic publishing • Journal discovery • Direct links to official journal portals</div>
+
+<header id="home">
+  <nav class="nav">
+    <div class="brand">📚 JOURNAL PUBLISHING HUB</div>
+    <div class="navlinks">
+      <a href="#journals">Journals</a>
+      <a href="#how">How to Submit</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div>
+      <span class="eyebrow">✦ Discover a suitable journal for your research</span>
+      <h1>Turn your research into a published contribution.</h1>
+      <p>
+        Explore a curated collection of journals in management, statistics, operational research,
+        interdisciplinary studies, health and related academic fields. Open the official journal
+        website to read the aims, author guidelines, current issues and submission instructions.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="#journals">Explore Journals ↓</a>
+  
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="big">09</div>
+      <strong>journal portals</strong>
+      <p style="margin:12px 0 0">Compare the scope and submission information of each journal before preparing your manuscript.</p>
+      <small>Last reviewed: October 2026</small>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="section" id="journals">
+  <div class="section-head">
+    <div>
+      <h2>Explore the journals</h2>
+      <p>Use the search box to find a journal by title, abbreviation or subject area. Each journal card shows its publication frequency and publication month(s) where available.</p>
+    </div>
+    <a class="btn outline" href="#covers">🖼 Cover collection ↓</a>
+  </div>
+
+  <div class="searchbar">
+    <span>🔎</span>
+    <input id="search" type="search" placeholder="Search journals, subjects, ISSN, or keywords…">
+  </div>
+
+  <div class="grid" id="journalGrid">
+
+    <article class="card" data-search="IJSIRT International Journal of Silkroad Institute of Research and Training health research training Nepal ISSN 2990-7837">
+      <a class="cover has-photo" href="https://www.nepjol.info/index.php/ijsirt" target="_blank" rel="noopener" aria-label="Open IJSIRT journal">
+<img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/ijsirt.jfif" alt="IJSIRT journal cover">
+<span class="mini">Research Journal</span><span class="initials">IJSIRT</span></a>
+      <div class="card-body">
+        <span class="tag">Research • Multidisciplinary / Health</span>
+        <h3>International Journal of Silkroad Institute of Research and Training (IJSIRT)</h3>
+        <p>A Nepal-based journal with research articles across areas represented by the Silkroad Institute of Research and Training.</p>
+        <div class="meta">ISSN: 2990-7837<br><strong>Frequency:</strong> Biannual &nbsp;•&nbsp; <strong>Months:</strong> May–Oct / Nov–Apr</div>
+        <div class="card-actions">
+          <a class="btn small primary" href="https://www.nepjol.info/index.php/ijsirt" target="_blank" rel="noopener">Journal site ↗</a>
+          <button class="btn small outline" onclick="showDetails('ijsirt')">Details</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-search="MJIRS Morgan Journal of Interdisciplinary Research Studies multidisciplinary peer reviewed annual NepJOL Google Scholar">
+      <a class="cover has-photo" href="https://www.nepjol.info/index.php/mjirs" target="_blank" rel="noopener" aria-label="Open MJIRS journal">
+<img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/MJIRS.jfif" alt="MJIRS journal cover">
+<span class="mini">Interdisciplinary</span><span class="initials">MJIRS</span></a>
+      <div class="card-body">
+        <span class="tag">Multidisciplinary</span>
+        <h3>Morgan Journal of Interdisciplinary Research Studies (MJIRS)</h3>
+        <p>A multidisciplinary, peer-reviewed journal welcoming theoretical and empirical papers, case studies and review papers.</p>
+        <div class="meta"><strong>Frequency:</strong> Annual &nbsp;•&nbsp; <strong>Month:</strong> October<br>NepJOL / Google Scholar noted by publisher</div>
+        <div class="card-actions">
+          <a class="btn small primary" href="https://www.nepjol.info/index.php/mjirs" target="_blank" rel="noopener">Journal site ↗</a>
+          <button class="btn small outline" onclick="showDetails('mjirs')">Details</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-search="IJORN International Journal of Operational Research Nepal operations research optimization statistics modeling mathematics">
+      <a class="cover has-photo" href="https://www.nepjol.info/index.php/ijorn" target="_blank" rel="noopener" aria-label="Open IJORN journal">
+<img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/ijorn.jfif" alt="IJORN journal cover">
+<span class="mini">Operations Research</span><span class="initials">IJORN</span></a>
+      <div class="card-body">
+        <span class="tag">Operations Research</span>
+        <h3>International Journal of Operational Research/Nepal (IJORN)</h3>
+        <p>Covers operations research models, methods and applications, with related work in statistics, mathematics and mathematical modelling.</p>
+        <div class="meta">ISSN: 2091-153X (online) • 2091-1521 (print)<br><strong>Frequency:</strong> Annual &nbsp;•&nbsp; <strong>Month:</strong> December</div>
+        <div class="card-actions">
+          <a class="btn small primary" href="https://www.nepjol.info/index.php/ijorn" target="_blank" rel="noopener">Journal site ↗</a>
+          <button class="btn small outline" onclick="showDetails('ijorn')">Details</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-search="NJSD Nepal Journal of Statistics and Data Sciences statistics data science Bayesian sampling machine learning">
+      <a class="cover has-photo" href="https://journal.ness.org.np/index.php/njsd" target="_blank" rel="noopener" aria-label="Open NJSD journal">
+<img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/NJSD.jpg" alt="NJSD journal cover">
+<span class="mini">Statistics & Data</span><span class="initials">NJSD</span></a>
+      <div class="card-body">
+        <span class="tag">Statistics • Data Science</span>
+        <h3>Nepal Journal of Statistics and Data Sciences (NJSD)</h3>
+        <p>A journal focused on statistics and data-science research, with a current issue available through its journal portal.</p>
+        <div class="meta">Current issue: Vol. 1 No. 1 (2026)<br><strong>Frequency:</strong> Annual &nbsp;•&nbsp; <strong>Month:</strong> September</div>
+        <div class="card-actions">
+          <a class="btn small primary" href="https://journal.ness.org.np/index.php/njsd" target="_blank" rel="noopener">Journal site ↗</a>
+          <button class="btn small outline" onclick="showDetails('njsd')">Details</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-search="OIMJOC journal Nepal OIMJOC">
+      <a class="cover has-photo" href="https://www.nepjol.info/index.php/oimjoc" target="_blank" rel="noopener" aria-label="Open OIMJOC journal">
+<img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/orchid%20insight.jfif" alt="Orchid Insight journal cover">
+<span class="mini">Journal Portal</span><span class="initials">OIMJOC</span></a>
+      <div class="card-body">
+        <span class="tag">Academic Journal</span>
+        <h3>Orchid Insights</h3>
+        <p>A Multidisciplinary Journal</p>
+        <div class="meta"><strong>Frequency:</strong> Yearly &nbsp;•&nbsp; <strong>Month:</strong> July</div>
+        <div class="card-actions">
+          <a class="btn small primary" href="https://www.nepjol.info/index.php/oimjoc" target="_blank" rel="noopener">Journal site ↗</a>
+          <button class="btn small outline" onclick="showDetails('oimjoc')">Details</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-search="Quality Nexus Journal NQPCN quality productivity competitiveness Nepal">
+      <a class="cover has-photo" href="https://www.nqpcn.info.np/journal.html" target="_blank" rel="noopener" aria-label="Open Quality Nexus journal">
+<img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/qality.jpg" alt="Quality Nexus journal cover">
+<span class="mini">Quality • Productivity</span><span class="initials">QN</span></a>
+      <div class="card-body">
+        <span class="tag">Quality • Productivity • Competitiveness</span>
+        <h3>Quality Nexus: Journal of NQPCN</h3>
+        <p>A publication associated with the Network for Quality, Productivity and Competitiveness – Nepal.</p>
+        <div class="meta">ISSN: 3059-9474 • NQPCN<br><strong>Frequency:</strong> Annual &nbsp;•&nbsp; <strong>Issue months:</strong> July</div>
+        <div class="card-actions">
+          <a class="btn small primary" href="https://www.nqpcn.info.np/journal.html" target="_blank" rel="noopener">Journal site ↗</a>
+          <button class="btn small outline" onclick="showDetails('nqpcn')">Details</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-search="PUJSE JPU Journal of Science and Engineering journal published by the School of Science and Engineering, Purbanchal University peer reviewed open access NepJOL ISSN 3149-7373  3149-7381">
+      <a class="cover has-photo" href="https://research.puse.edu.np/" target="_blank" rel="noopener" aria-label="Open PUJSE journal">
+<img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/PUJSE.jpg" alt="PUJSE journal cover">
+<span class="mini">Science & Engineering</span><span class="initials">PUJSE</span></a>
+      <div class="card-body">
+        <span class="tag">Science • Engineering</span>
+        <h3>PU Journal of Science and Engineering (PUJSE)</h3>
+        <p>A peer-reviewed, open-access management journal published by the School of Science and Engineering, Purbanchal University.</p>
+        <div class="meta">Print Print ISSN: 3149-7373 (Print) • 3149-7381 (Online)<br><strong>Frequency:</strong> Annual &nbsp;•&nbsp; <strong>Month:</strong> December</div>
+        <div class="card-actions">
+          <a class="btn small primary" href="https://research.puse.edu.np/" target="_blank" rel="noopener">Journal site ↗</a>
+          <button class="btn small outline" onclick="showDetails('jnbs')">Details</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-search="PBRI Pacific Business Review International management business monthly Web of Science ESCI ISSN 0974-438X">
+      <a class="cover has-photo" href="https://www.pbr.co.in" target="_blank" rel="noopener" aria-label="Open PBRI journal">
+<img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/PBRI.jfif" alt="PBRI journal cover">
+<span class="mini">Business & Management</span><span class="initials">PBRI</span></a>
+      <div class="card-body">
+        <span class="tag">Management</span>
+        <h3>Pacific Business Review International (PBRI)</h3>
+        <p>A refereed international management journal publishing research papers, articles and management cases.</p>
+        <div class="meta">ISSN: 0974-438X<br><strong>Frequency:</strong> Monthly &nbsp;•&nbsp; <strong>Months:</strong> January–December</div>
+        <div class="card-actions">
+          <a class="btn small primary" href="https://www.pbr.co.in" target="_blank" rel="noopener">Journal site ↗</a>
+          <button class="btn small outline" onclick="showDetails('pbri')">Details</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="card" data-search="MRIJ Management Review An International Journal KINFORMS management Korea ISSN 1975-8480 2714-1047">
+      <a class="cover has-photo" href="https://mrij.org" target="_blank" rel="noopener" aria-label="Open MRIJ journal">
+<img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/mraij.png" alt="MRIJ journal cover">
+<span class="mini">Management Review</span><span class="initials">MRIJ</span></a>
+      <div class="card-body">
+        <span class="tag">Management</span>
+        <h3>Management Review: An International Journal (MRIJ)</h3>
+        <p>A KINFORMS journal focused on sharing knowledge, exchanging experience and creating new ideas between academics and practitioners.</p>
+        <div class="meta">Print ISSN: 1975-8480 • Online ISSN: 2714-1047<br><strong>Frequency:</strong> Twice a year &nbsp;•&nbsp; <strong>Months:</strong> June & December</div>
+        <div class="card-actions">
+          <a class="btn small primary" href="https://mrij.org" target="_blank" rel="noopener">Journal site ↗</a>
+          <button class="btn small outline" onclick="showDetails('mrij')">Details</button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+  <p id="noResults" class="hidden" style="padding:30px;text-align:center;color:#667085">No matching journal found. Try another keyword.</p>
+</section>
+
+<section class="section" id="covers">
+  <div class="cover-section">
+    <div class="section-head">
+      <div>
+        <h2>Journal Cover</h2>
+        <p class="cover-note">Click any cover to open the corresponding journal website.</p>
+      </div>
+      
+    </div>
+
+    <div class="cover-gallery">
+
+      <div class="cover-item">
+        <a href="https://www.nepjol.info/index.php/ijsirt" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/ijsirt.jfif" alt="IJSIRT journal cover" loading="lazy">
+          <div class="cover-caption">IJSIRT<small>Open journal ↗</small></div>
+        </a>
+      </div>
+
+      <div class="cover-item">
+        <a href="https://www.nepjol.info/index.php/mjirs" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/MJIRS.jfif" alt="MJIRS journal cover" loading="lazy">
+          <div class="cover-caption">MJIRS<small>Open journal ↗</small></div>
+        </a>
+      </div>
+
+      <div class="cover-item">
+        <a href="https://www.nepjol.info/index.php/ijorn" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/ijorn.jfif" alt="IJORN journal cover" loading="lazy">
+          <div class="cover-caption">IJORN<small>Open journal ↗</small></div>
+        </a>
+      </div>
+
+      <div class="cover-item">
+        <a href="https://journal.ness.org.np/index.php/njsd" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/NJSD.jpg" alt="NJSD journal cover" loading="lazy">
+          <div class="cover-caption">NJSD<small>Open journal ↗</small></div>
+        </a>
+      </div>
+
+      <div class="cover-item">
+        <a href="https://www.nepjol.info/index.php/oimjoc" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/orchid%20insight.jfif" alt="Orchid Insight journal cover" loading="lazy">
+          <div class="cover-caption">OIMJOC<small>Open journal ↗</small></div>
+        </a>
+      </div>
+
+      <div class="cover-item">
+        <a href="https://www.nqpcn.info.np/journal.html" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/qality.jpg" alt="Quality Nexus journal cover" loading="lazy">
+          <div class="cover-caption">Quality Nexus<small>Open journal ↗</small></div>
+        </a>
+      </div>
+
+      <div class="cover-item">
+        <a href="https://research.puse.edu.np/" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/PUJSE.jpg" alt="PUJSE journal cover" loading="lazy">
+          <div class="cover-caption">PUJSE<small>Open journal ↗</small></div>
+        </a>
+      </div>
+
+      <div class="cover-item">
+        <a href="https://www.pbr.co.in" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/PBRI.jfif" alt="PBRI journal cover" loading="lazy">
+          <div class="cover-caption">PBRI<small>Open journal ↗</small></div>
+        </a>
+      </div>
+
+      <div class="cover-item">
+        <a href="https://mrij.org" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/bijayprad/Journal/refs/heads/main/pics/mraij.png" alt="MRIJ journal cover" loading="lazy">
+          <div class="cover-caption">MRIJ<small>Open journal ↗</small></div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="info">
+    <div>
+      <h2>Before you submit</h2>
+      <p>Choosing a journal should start with scope and publication requirements. Use each journal's official website as the authoritative source for the latest submission rules.</p>
+      <a class="btn primary" href="#journals">Find a journal</a>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="num">1</span><div><strong>Check the scope</strong><br><span style="color:#667085">Make sure your topic fits the journal's aims and scope.</span></div></div>
+      <div class="step"><span class="num">2</span><div><strong>Read author guidelines</strong><br><span style="color:#667085">Check formatting, references, ethics and submission requirements.</span></div></div>
+      <div class="step"><span class="num">3</span><div><strong>Review recent articles</strong><br><span style="color:#667085">Look at the journal's latest issues and published research.</span></div></div>
+      <div class="step"><span class="num">4</span><div><strong>Submit through the official route</strong><br><span style="color:#667085">Use the journal's own submission system or contact route.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="contact">
+    <div>
+      <h2>Have a manuscript ready?</h2>
+      <p>For journal-related enquiries, you can contact us at <strong>ijsirt@gmail.com</strong> or reach us on WhatsApp at <strong>+977 9864220077</strong>. For submission status, fees, editorial decisions and publication timelines, please also check the relevant journal's official website.</p>
+    </div>
+    <div class="actions" style="margin-top:0">
+      <a class="btn primary" href="mailto:ijsirt@gmail.com">✉ ijsirt@gmail.com</a>
+      <a class="btn light" href="https://wa.me/9779864220077" target="_blank" rel="noopener">💬 WhatsApp</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div><strong>Journal Publishing Hub</strong><br>Academic journal discovery and submission information.</div>
+  </div>
+</footer>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modalbox">
+    <button class="close" onclick="closeModal()" aria-label="Close">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const details = {
+  ijsirt:{
+    title:"International Journal of Silkroad Institute of Research and Training (IJSIRT)",
+    text:"The journal is listed on NepJOL. The ISSN Portal records ISSN 2990-7837 for IJSIRT. Recent published material includes original research articles in health and related areas.",
+    facts:["ISSN 2990-7837","NepJOL","Nepal"],
+    url:"https://www.nepjol.info/index.php/ijsirt"
+  },
+  mjirs:{
+    title:"Morgan Journal of Interdisciplinary Research Studies (MJIRS)",
+    text:"The publisher describes MJIRS as a multidisciplinary, peer-reviewed journal published annually, welcoming theoretical and empirical research papers, case studies and review papers. The publisher also notes NepJOL and Google Scholar indexing.",
+    facts:["Multidisciplinary","Peer reviewed","Annual","NepJOL / Google Scholar"],
+    url:"https://www.nepjol.info/index.php/mjirs"
+  },
+  ijorn:{
+    title:"International Journal of Operational Research/Nepal (IJORN)",
+    text:"IJORN addresses theoretical frameworks, models, computational studies and conceptual development in operations research. Its stated areas include optimization, scheduling, project management, logistics, stochastic processes, simulation, statistics, mathematics and mathematical modelling.",
+    facts:["ISSN 2091-153X online","ISSN 2091-1521 print","Operations Research"],
+    url:"https://www.nepjol.info/index.php/ijorn"
+  },
+  njsd:{
+    title:"Nepal Journal of Statistics and Data Sciences (NJSD)",
+    text:"The journal portal currently lists Vol. 1 No. 1 (2026), published September 20, 2026, with articles covering statistical modelling, Bayesian methods, structural equation modelling, machine learning and related data-science topics.",
+    facts:["Vol. 1 No. 1 (2026)","Statistics","Data Science"],
+    url:"https://journal.ness.org.np/index.php/njsd"
+  },
+  oimjoc:{
+    title:"OIMJOC",
+    text:"The supplied NepJOL portal is provided here as the authoritative place to check the journal's current title, scope, editorial information and manuscript-submission requirements.",
+    facts:["NepJOL portal","Check current author guidelines"],
+    url:"https://www.nepjol.info/index.php/oimjoc"
+  },
+  nqpcn:{
+    title:"Quality Nexus: Journal of NQPCN",
+    text:"Quality Nexus is associated with the Network for Quality, Productivity and Competitiveness – Nepal. A published article record identifies the journal as Quality Nexus: Journal of NQPCN, 1(1), 1–7 (2024), ISSN 3059-9474.",
+    facts:["ISSN 3059-9474","Quality","Productivity","Competitiveness"],
+    url:"https://www.nqpcn.info.np/journal.html"
+  },
+  pbri:{
+    title:"Pacific Business Review International (PBRI)",
+    text:"The journal describes itself as a refereed monthly international journal of management. Its author guidelines state that it invites original research papers, articles, book reviews and management cases, with submissions reviewed by referees.",
+    facts:["ISSN 0974-438X","Monthly","Management","Refereed"],
+    url:"https://www.pbr.co.in"
+  },
+  jnbs:{title:"The Journal of Nepalese Business Studies (JNBS)",text:"The Journal of Nepalese Business Studies is a peer-reviewed, open-access management journal published annually by the Faculty of Management, Prithvi Narayan Campus, Tribhuvan University. Its scope includes business, marketing, finance, accounting, banking, management, production and operations management, human resources, entrepreneurship and related business-administration topics.",facts:["Print ISSN 2350-8795","Online ISSN 2676-1238","Peer reviewed","Open access","Annual"],url:"https://ejournals.pncampus.edu.np/ejournals/jnbs/"},
+  mrij:{
+    title:"Management Review: An International Journal (MRIJ)",
+    text:"MRIJ is presented on the KINFORMS website as a journal promoting knowledge sharing, experience exchange and new ideas between academics and practitioners. The ISSN Portal records print ISSN 1975-8480 and online ISSN 2714-1047.",
+    facts:["Print ISSN 1975-8480","Online ISSN 2714-1047","KINFORMS","Management"],
+    url:"https://mrij.org"
+  }
+};
+
+function showDetails(key){
+  const d=details[key];
+  document.getElementById("modalContent").innerHTML = `
+    <h2>${d.title}</h2>
+    <div class="facts">${d.facts.map(x=>`<span class="fact">${x}</span>`).join("")}</div>
+    <p>${d.text}</p>
+    <div class="actions">
+      <a class="btn primary" href="${d.url}" target="_blank" rel="noopener">Open official journal portal ↗</a>
+      <a class="btn outline" href="https://github.com/bijayprad/Journal/tree/main/pics" target="_blank" rel="noopener">View cover collection ↗</a>
+    </div>
+    <div class="notice">Important: journal scopes, indexing, fees, deadlines, editorial policies and submission procedures can change. Always verify the latest information on the official journal website before submitting a manuscript.</div>`;
+  document.getElementById("modal").classList.add("show");
+  document.getElementById("modal").setAttribute("aria-hidden","false");
+}
+function closeModal(){
+  document.getElementById("modal").classList.remove("show");
+  document.getElementById("modal").setAttribute("aria-hidden","true");
+}
+document.getElementById("modal").addEventListener("click",e=>{
+  if(e.target.id==="modal") closeModal();
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape") closeModal();});
+
+// Load actual photographs from the public GitHub /Journal/pics folder.
+(async function(){const g=document.getElementById("githubGallery"),e=document.getElementById("galleryError");try{const r=await fetch("https://api.github.com/repos/bijayprad/Journal/contents/pics",{headers:{Accept:"application/vnd.github+json"}});if(!r.ok)throw Error(r.status);const f=await r.json(),imgs=f.filter(x=>x.type==="file"&&/\.(png|jpe?g|webp|gif)$/i.test(x.name));if(!imgs.length)throw Error("no images");g.innerHTML="";imgs.forEach(x=>{const d=document.createElement("div");d.className="gallery-item";d.innerHTML=`<a href="${x.html_url}" target="_blank" rel="noopener"><img src="${x.download_url}" loading="lazy" alt="Journal photograph: ${x.name}"></a><div class="gallery-caption">${x.name}</div>`;g.appendChild(d)});const aliases={ijsirt:["ijsirt","silkroad"],mjirs:["mjirs","morgan"],ijorn:["ijorn","operational"],njsd:["njsd"],oimjoc:["oimjoc"],nqpcn:["nqpcn","quality","nexus"],jnbs:["jnbs","nepalese-business"],pbri:["pbri","pacific-business"],mrij:["mrij","management-review"]};Object.entries(aliases).forEach(([k,t])=>{const m=imgs.find(x=>t.some(a=>x.name.toLowerCase().includes(a)));if(!m)return;document.querySelectorAll(`button[onclick="showDetails('${k}')"]`).forEach(b=>{const c=b.closest('.card').querySelector('.cover');if(c.classList.contains('has-photo'))return;c.classList.add('has-photo');const im=document.createElement('img');im.src=m.download_url;im.alt='Journal cover photograph';im.loading='lazy';c.prepend(im)})})}catch(x){g.innerHTML="";e.classList.remove("hidden")}})();
+
+const search=document.getElementById("search");
+const cards=[...document.querySelectorAll(".card")];
+const noResults=document.getElementById("noResults");
+search.addEventListener("input",()=>{
+  const q=search.value.toLowerCase().trim();
+  let count=0;
+  cards.forEach(card=>{
+    const match=card.dataset.search.toLowerCase().includes(q);
+    card.classList.toggle("hidden",!match);
+    if(match) count++;
+  });
+  noResults.classList.toggle("hidden",count!==0);
+});
+</script>
+</body>
+</html>
